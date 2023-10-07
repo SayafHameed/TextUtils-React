@@ -36,14 +36,8 @@ function TextForm(props) {
      props.show('Text cleared','success')
   }
   }
-  function totalwords() {
-   
-    let words=text.split(" ").length-1;
-    if( text.startsWith(" ")){
-      words=words-1;
-    }
-   
-    
+  const totalwords=(word)=> {
+    let words=word.split(" ").filter((e)=>{return e.length!=0 }).length;
     return words;
   }
   const copyText=()=>{
@@ -69,10 +63,10 @@ function TextForm(props) {
   // }
   
   return (
-    <div className={`bg-${props.mode.backgroundColor} text-${props.mode.color} p-4`}>
-      <h1>{props.heading}</h1>
+    <div className={`bg-${props.mode.backgroundColor} text-${props.mode.color} p-4 mx-4 my-4 flex-grow d-flex flex-column`}>
+      <h1 className="d-flex flex-wrap flex-column">{props.heading}</h1>
       <textarea
-        className={`form-control py-4 px-4  my-2 bg-${props.mode.backgroundColor} text-${props.mode.color}`}
+        className={`form-control py-4 px-4  my-2 bg-${props.mode.backgroundColor} text-${props.mode.color} d-flex flex-wrap`}
         placeholder="Leave a text here..."
         id="floatingTextarea2"
         style={{ height: 100 }}
@@ -80,7 +74,7 @@ function TextForm(props) {
         value={text}
         onChange={handleOnChange}
       />
-      <div className="d-flex gap-2">
+      <div className="d-flex gap-2 flex-lg-nowrap flex-sm-wrap overflow-y-auto btns">
       <button className="btn btn-primary  p-2 w-100  " onClick={toUpper}>Convert to UpperCase</button>
         <button className="btn btn-primary p-2 w-100" onClick={toLower}>Convert to LowerCase</button>
          <button className="btn btn-primary p-2 w-100" onClick={resetText}>Reset</button>
@@ -88,10 +82,10 @@ function TextForm(props) {
       </div>
       <div className="Container">
         <h3 className="my-2">Text summary:</h3>
-        <p>{totalwords()} words and {text.length} characters</p>
+        <p>{totalwords(text)} words and {text.length} characters</p>
         </div>
         <h2>Preview: </h2><p>{text.length>0?text:'Enter the text in box to preview here..'}</p>
-        {/* <p>{textCopied}</p> */}
+        
     </div>
   );
 }
